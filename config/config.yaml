@@ -1,0 +1,9 @@
+scan:
+  target_domains:
+    - example.com
+    - test.com
+
+notifications:
+  telegram_token: ""
+  email: ""
+

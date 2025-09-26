@@ -1,4 +1,5 @@
 dnspython
 requests
 PyYAML
+schedule
 

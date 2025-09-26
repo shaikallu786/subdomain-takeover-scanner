@@ -2,15 +2,7 @@ scan:
   target_domains:
     - example.com
     - test.com
-    - google.com
-    - facebook.com
-    - twitter.com
-    - instagram.com
-    - youtube.com
-    - linkedin.com
-    - github.com  
 
 notifications:
-  telegram_token: ""
-  email: ""
-
+  telegram_token: "8060633424:AAHNsnm__5hfJ5VAvm_aVULrzFh9O9a-fxE"
+  telegram_chat_id: "5736608020"

@@ -3,3 +3,5 @@ requests
 PyYAML
 schedule
 sqlite3
+flask
+jinja2

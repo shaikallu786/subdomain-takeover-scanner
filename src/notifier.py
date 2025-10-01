@@ -25,9 +25,17 @@ def send_telegram_message(message: str):
 
     try:
         response = requests.post(url, data=payload)
+        # Debug print of raw Telegram API response
+        print("[+] Telegram Response:", response.text)
         if response.status_code == 200:
             print("[+] Telegram notification sent.")
         else:
-            print(f"[!] Failed to send Telegram message: {response.text}")
+            print(f"[!] Failed to send Telegram message: {response.status_code}")
     except Exception as e:
         print(f"[!] Telegram error: {e}")
+
+
+# Optional: function with the requested name that uses the same logic
+def send_telegram(message: str):
+    """Compatibility wrapper that sends a Telegram message using config values."""
+    send_telegram_message(message)

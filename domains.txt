@@ -1,0 +1,5 @@
+﻿example.com
+test.com
+google.com
+yahoo.com
+test.herokuapp.com

@@ -1,6 +1,15 @@
 import dns.resolver
 import yaml
 from notifier import send_telegram_message
+from db import init_db, insert_scan_result
+
+
+def risk_level_for_cname(cname: str) -> str:
+    suspicious_keywords = ["herokuapp", "aws", "azurewebsites", "github.io", "netlify", "surge.sh"]
+    for keyword in suspicious_keywords:
+        if keyword in cname:
+            return "HIGH"
+    return "LOW"
 
 
 def load_config(path: str = "config/config.yaml") -> dict:
@@ -13,6 +22,7 @@ def load_config(path: str = "config/config.yaml") -> dict:
 
 
 def run_scanner(domain: str):
+    init_db()
     print(f"[+] Starting scan for {domain}...")
     try:
         answers = dns.resolver.resolve(domain, "CNAME")
@@ -20,7 +30,11 @@ def run_scanner(domain: str):
         for rdata in answers:
             cname = rdata.to_text()
             print(f"CNAME record found: {cname}")
-            send_telegram_message(f"🚨 Dangling CNAME found for {domain} → {cname}")
+            risk = risk_level_for_cname(cname)
+            print(f"Risk Level: {risk}")
+            insert_scan_result(domain, cname, risk)
+            if risk == "HIGH":
+                send_telegram_message(f"🚨 Dangling CNAME found for {domain} → {cname} (Risk: {risk})")
             found = True
         if not found:
             print(f"[+] No CNAME records found for {domain}")

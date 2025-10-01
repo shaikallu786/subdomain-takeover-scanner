@@ -1,6 +1,6 @@
+from scanner import run_all_scans
 import schedule
 import time
-from scanner import run_all_scans
 
 
 def job():
@@ -10,8 +10,8 @@ def job():
 
 
 if __name__ == "__main__":
-    schedule.every(5).minutes.do(job)  # scan every 5 minutes
-    print("[+] Real-Time Scanner started.")
+    schedule.every(5).minutes.do(job)
+    print("[+] Real-Time Scanner with DB started.")
     while True:
         schedule.run_pending()
         time.sleep(1)

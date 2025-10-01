@@ -2,4 +2,4 @@ dnspython
 requests
 PyYAML
 schedule
-
+sqlite3

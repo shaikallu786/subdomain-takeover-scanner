@@ -8,7 +8,8 @@ Usage:
 """
 import requests, json
 
-BOT_TOKEN = "8236192822:AAHFvbhKiB2nWLJxpNWly4B3x36S_5l7GJc"  # replace
+import os
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")  # Set via environment variable
 
 def main():
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates"

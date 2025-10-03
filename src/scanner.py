@@ -23,9 +23,10 @@ LOG_DIR = BASE_DIR / "scanner_logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 SCANS_JSON = BASE_DIR / "scans.json"
 
-# Telegram — replace these with your real values
-BOT_TOKEN = "8236192822:AAHFvbhKiB2nWLJxpNWly4B3x36S_5l7GJc"   # <- replace
-CHAT_ID = "5736608020"  # <- replace with numeric chat_id after you message the bot
+# Telegram — load from environment variables
+import os
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")   # Set via environment variable
+CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")       # Set via environment variable
 
 # risk providers (lowercase)
 RISK_PROVIDERS = ["amazonaws", "azure", "heroku"]

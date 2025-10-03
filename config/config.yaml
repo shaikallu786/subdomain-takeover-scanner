@@ -4,5 +4,5 @@ scan:
     - test.com
 
 notifications:
-  telegram_token: "8060633424:AAHNsnm__5hfJ5VAvm_aVULrzFh9O9a-fxE"
+  telegram_token: "8060633424:AAE0rCAuJfc3dFHt5GdgPQJ7N64nG2ApvZQ"
   telegram_chat_id: "5736608020"

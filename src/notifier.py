@@ -1,3 +1,4 @@
+import os
 import requests
 import yaml
 
@@ -5,7 +6,15 @@ import yaml
 def load_config(path: str = "config/config.yaml") -> dict:
     try:
         with open(path, "r", encoding="utf-8") as f:
-            return yaml.safe_load(f) or {}
+            cfg = yaml.safe_load(f) or {}
+            # Environment variable interpolation for secrets
+            notif = cfg.get("notifications", {})
+            token = notif.get("telegram_token") or os.getenv("TELEGRAM_BOT_TOKEN")
+            chat_id = notif.get("telegram_chat_id") or os.getenv("TELEGRAM_CHAT_ID")
+            cfg.setdefault("notifications", {})
+            cfg["notifications"]["telegram_token"] = token
+            cfg["notifications"]["telegram_chat_id"] = chat_id
+            return cfg
     except FileNotFoundError:
         print(f"[!] Config file not found at {path}")
         return {}

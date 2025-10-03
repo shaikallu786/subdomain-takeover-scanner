@@ -4,5 +4,6 @@ scan:
     - test.com
 
 notifications:
-  telegram_token: "8060633424:AAE0rCAuJfc3dFHt5GdgPQJ7N64nG2ApvZQ"
-  telegram_chat_id: "5736608020"
+  # IMPORTANT: Do NOT commit real tokens. These are placeholders.
+  telegram_token: "${TELEGRAM_BOT_TOKEN}"
+  telegram_chat_id: "${TELEGRAM_CHAT_ID}"

@@ -37,9 +37,13 @@ git push origin --force --tags
 ## 🛡️ Prevention for Future
 
 - ✅ Environment variables are now used instead of hardcoded secrets
-- ✅ `.gitignore` created to prevent future leaks
+- ✅ `.gitignore` prevents committing local secrets (includes `config/config.yaml`)
 - ✅ `.env.example` template provided
 - ✅ Never commit `.env` files
+
+### Handling Secrets in config
+- `config/config.yaml` is ignored by git. Use placeholders like `${TELEGRAM_BOT_TOKEN}` or leave fields blank.
+- The app reads from environment variables if the placeholders are present.
 
 ## 📋 Quick Setup After Token Rotation
 

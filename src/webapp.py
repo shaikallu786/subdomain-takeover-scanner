@@ -1,39 +1,26 @@
-from flask import Flask, render_template, redirect, url_for
-import sqlite3
-import os
-import subprocess
-from db import init_db
+from flask import Flask, render_template, send_from_directory
+from pathlib import Path
+import json
 
-# Set template directory to project root
-template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'templates'))
-app = Flask(__name__, template_folder=template_dir)
+BASE_DIR = Path(__file__).resolve().parent.parent  # Go up one level to project root
+SCANS_JSON = BASE_DIR / "scans.json"
 
-# Initialize database when webapp starts
-init_db()
-
-
-def get_all_scans():
-    conn = sqlite3.connect("database/scans.db")
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM scans ORDER BY date DESC")
-    rows = cursor.fetchall()
-    conn.close()
-    return rows
-
+app = Flask(__name__, template_folder=str(BASE_DIR / "templates"))
 
 @app.route("/")
 def index():
-    scans = get_all_scans()
+    scans = {"last_run": "never", "results": []}
+    if SCANS_JSON.exists():
+        try:
+            scans = json.loads(SCANS_JSON.read_text(encoding="utf-8"))
+        except Exception as e:
+            scans = {"last_run": "error", "results": [], "error": str(e)}
     return render_template("index.html", scans=scans)
 
-@app.route("/run_scan")
-def run_scan():
-    # Run the scanner; it will insert results into the database
-    subprocess.run(["python", "src/scanner.py"])  # nosec - local script execution
-    # Redirect back to dashboard
-    return redirect(url_for("index"))
-
+@app.route("/logs/<path:filename>")
+def logs(filename):
+    logs_dir = BASE_DIR / "scanner_logs"
+    return send_from_directory(str(logs_dir), filename)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)

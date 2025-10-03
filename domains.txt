@@ -1,4 +1,7 @@
-﻿example.com
+﻿# One domain per line. Lines starting with # are comments.
+va01.ingress.herokuapp.com
+something.azure.com
+example.com
 test.com
 google.com
 yahoo.com
